@@ -24,13 +24,19 @@ struct ContentView: View {
                 TaskRowView(task: $task)
             }
             TextField("Nouvelle tâche", text: $newTitle)
-            Button("Ajouter une tâche") {
-                tasks.append(Task(title: newTitle, isCompleted: false, priority: .normal))
-                newTitle = ""
+            Divider()
+            MenuButton(text: "Ajouter une tâche", isDisabled: newTitle.isEmpty) {
+                    tasks.append(Task(title: newTitle, isCompleted: false, priority: .normal))
+                    newTitle = ""
+                }
+            Divider()
+            MenuButton(text: "Quitter") {
+                NSApp.terminate(nil)
             }
-            .disabled(newTitle.isEmpty)
+            
         }
-        .padding()
+        .padding(.horizontal, 5)
+        .padding(.vertical, 8)
         .frame(width: 350, height: 400)
     }
 }
