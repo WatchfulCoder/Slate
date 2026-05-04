@@ -23,7 +23,7 @@ struct ContentView: View {
                 TaskRowView(task: $task)
             }
             Button("Ajouter une tâche") {
-                tasks.append(Task(title: "New task", isCompleted: false, priority: "normal"))
+                tasks.append(Task(title: "New task", isCompleted: false, priority: .normal))
             }
         }
         .padding()

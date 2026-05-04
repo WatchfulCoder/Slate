@@ -19,7 +19,7 @@ struct TaskRowView: View {
             .buttonStyle(.plain)
             Text(task.title)
             Spacer()
-            Text(task.priority)
+            Image(systemName: task.priority.icon)
         }
     }
 }
