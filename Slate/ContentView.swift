@@ -20,7 +20,7 @@ struct ContentView: View {
                 Text("\(remainingTasksCount) restantes")
             }
             List($tasks) { $task in
-                Toggle(task.title, isOn: $task.isCompleted)
+                TaskRowView(task: $task)
             }
             Button("Ajouter une tâche") {
                 tasks.append(Task(title: "New task", isCompleted: false, priority: "normal"))
