@@ -31,6 +31,7 @@ struct ContentView: View {
             .disabled(newTitle.isEmpty)
         }
         .padding()
+        .frame(width: 350, height: 400)
     }
 }
 
