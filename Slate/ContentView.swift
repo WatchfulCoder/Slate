@@ -9,17 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var tasks: [Task] = []
+    private var remainingTasksCount: Int {
+        tasks.filter { !$0.isCompleted }.count
+    }
     var body: some View {
         VStack {
             HStack {
                 Text("Tâches")
                 Spacer()
-                Text("\(tasks.count) restantes")
+                Text("\(remainingTasksCount) restantes")
             }
-            List(tasks) { task in
-                    Text(task.title)
+            List($tasks) { $task in
+                Toggle(task.title, isOn: $task.isCompleted)
             }
-            Button("Click here") {
+            Button("Ajouter une tâche") {
                 tasks.append(Task(title: "New task", isCompleted: false, priority: "normal"))
             }
         }
