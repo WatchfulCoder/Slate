@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var tasks: [Task] = []
+    @State private var newTitle: String = ""
     private var remainingTasksCount: Int {
         tasks.filter { !$0.isCompleted }.count
     }
@@ -22,9 +23,12 @@ struct ContentView: View {
             List($tasks) { $task in
                 TaskRowView(task: $task)
             }
+            TextField("Nouvelle tâche", text: $newTitle)
             Button("Ajouter une tâche") {
-                tasks.append(Task(title: "New task", isCompleted: false, priority: .normal))
+                tasks.append(Task(title: newTitle, isCompleted: false, priority: .normal))
+                newTitle = ""
             }
+            .disabled(newTitle.isEmpty)
         }
         .padding()
     }
