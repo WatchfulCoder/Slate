@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct SlateApp: App {
@@ -15,6 +16,7 @@ struct SlateApp: App {
             ContentView()
         }
         .menuBarExtraStyle(.window)
+        .modelContainer(for: Task.self)
     }
 }
 

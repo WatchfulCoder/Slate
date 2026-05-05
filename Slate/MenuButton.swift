@@ -20,7 +20,7 @@ struct MenuButton: View {
             Text(text)
                 .foregroundStyle(isHovered ? .white : .primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 13)
+                .padding(.horizontal, 10)
                 .padding(.vertical, 3)
                 .background(isHovered && !isDisabled ? Color.accentColor : Color.clear)
                 .cornerRadius(6)

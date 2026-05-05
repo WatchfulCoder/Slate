@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
-    @State private var tasks: [Task] = []
+    @Environment(\.modelContext) private var context
+    @Query private var tasks: [Task]
     @State private var newTitle: String = ""
     private var remainingTasksCount: Int {
         tasks.filter { !$0.isCompleted }.count
@@ -20,13 +22,15 @@ struct ContentView: View {
                 Spacer()
                 Text("\(remainingTasksCount) restantes")
             }
-            List($tasks) { $task in
-                TaskRowView(task: $task)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 3)
+            List(tasks) { task in
+                TaskRowView(task: task)
             }
             TextField("Nouvelle tâche", text: $newTitle)
             Divider()
             MenuButton(text: "Ajouter une tâche", isDisabled: newTitle.isEmpty) {
-                    tasks.append(Task(title: newTitle, isCompleted: false, priority: .normal))
+                context.insert(Task(title: newTitle, isCompleted: false, priority: .normal))
                     newTitle = ""
                 }
             Divider()
