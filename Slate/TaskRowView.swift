@@ -19,6 +19,13 @@ struct TaskRowView: View {
             .buttonStyle(.plain)
             Text(task.title)
             Spacer()
+            if let date = task.dueDate {
+                HStack {
+                    Text("Pour le")
+                    Text(date, style: .date)
+                        .environment(\.locale, .init(identifier: "fr_FR"))
+                }
+            }
             Image(systemName: task.priority.icon)
         }
     }

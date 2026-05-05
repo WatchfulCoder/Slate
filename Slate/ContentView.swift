@@ -10,11 +10,19 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var context
+    
     @Query private var tasks: [Task]
+    
     @State private var newTitle: String = ""
+    
+    @State private var hasDueDate: Bool = false
+    
+    @State private var newDueDate: Date = Date()
+    
     private var remainingTasksCount: Int {
         tasks.filter { !$0.isCompleted }.count
     }
+    
     var body: some View {
         VStack {
             HStack {
@@ -28,10 +36,16 @@ struct ContentView: View {
                 TaskRowView(task: task)
             }
             TextField("Nouvelle tâche", text: $newTitle)
+            Toggle("Ajouter une Échéance", isOn: $hasDueDate)
+            if hasDueDate {
+                DatePicker("Échéance", selection: $newDueDate, displayedComponents: .date)
+            }
             Divider()
             MenuButton(text: "Ajouter une tâche", isDisabled: newTitle.isEmpty) {
-                context.insert(Task(title: newTitle, isCompleted: false, priority: .normal))
-                    newTitle = ""
+                let task = Task(title: newTitle, isCompleted: false, priority: .normal)
+                task.dueDate = hasDueDate ? newDueDate : nil
+                context.insert(task)
+                newTitle = ""
                 }
             Divider()
             MenuButton(text: "Quitter") {

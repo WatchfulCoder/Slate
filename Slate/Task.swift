@@ -14,6 +14,7 @@ class Task: Identifiable {
     var title: String
     var isCompleted: Bool
     var priority: Priority
+    var dueDate: Date?
     
     init(title: String, isCompleted: Bool, priority: Priority) {
         self.title = title
