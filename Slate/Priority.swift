@@ -5,7 +5,7 @@
 //  Created by Mathias Setterblad on 04/05/2026.
 //
 
-enum Priority: String, Codable {
+enum Priority: String, Codable, CaseIterable {
     case high = "Haute"
     case normal = "Normale"
     case low = "Basse"

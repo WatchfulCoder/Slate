@@ -11,13 +11,15 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var context
     
-    @Query private var tasks: [Task]
+    @Query(filter: #Predicate<Task> { !$0.isCompleted }) private var tasks: [Task]
     
     @State private var newTitle: String = ""
     
     @State private var hasDueDate: Bool = false
     
     @State private var newDueDate: Date = Date()
+    
+    @State private var newPriority: Priority = .normal
     
     private var remainingTasksCount: Int {
         tasks.filter { !$0.isCompleted }.count
@@ -40,9 +42,14 @@ struct ContentView: View {
             if hasDueDate {
                 DatePicker("Échéance", selection: $newDueDate, displayedComponents: .date)
             }
+            Picker("Priorité", selection: $newPriority) {
+                ForEach(Priority.allCases, id: \.self) { priority in
+                    Text(priority.rawValue).tag(priority)
+                }
+            }
             Divider()
             MenuButton(text: "Ajouter une tâche", isDisabled: newTitle.isEmpty) {
-                let task = Task(title: newTitle, isCompleted: false, priority: .normal)
+                let task = Task(title: newTitle, isCompleted: false, priority: newPriority)
                 task.dueDate = hasDueDate ? newDueDate : nil
                 context.insert(task)
                 newTitle = ""
